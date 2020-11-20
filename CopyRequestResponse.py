@@ -59,22 +59,22 @@ class BurpExtender(IBurpExtender, IContextMenuFactory, IHttpRequestResponse):
 
         for i in httpRequestHeader:
             if i.startswith('Host'):
-                httpRequestHeaderFiltered += "\n"
+                httpRequestHeaderFiltered += "\r\n"
                 httpRequestHeaderFiltered += i
             elif i.startswith('Connection'):
-                httpRequestHeaderFiltered += "\n"
+                httpRequestHeaderFiltered += "\r\n"
                 httpRequestHeaderFiltered += i
             elif i.startswith('Content-Type'):
-                httpRequestHeaderFiltered += "\n"
+                httpRequestHeaderFiltered += "\r\n"
                 httpRequestHeaderFiltered += i
             elif i.startswith('Cookie'):
-                httpRequestHeaderFiltered += "\n"
+                httpRequestHeaderFiltered += "\r\n"
                 httpRequestHeaderFiltered += i
 
         if not httpRequestBody:
             httpRequest = httpRequestHeaderFiltered
         else:
-            httpRequest = httpRequestHeaderFiltered + "\n\n" + httpRequestBody
+            httpRequest = httpRequestHeaderFiltered + "\r\n\r\n" + httpRequestBody
 
         httpRequest = unquote(httpRequest).decode('utf8')
 
@@ -82,26 +82,26 @@ class BurpExtender(IBurpExtender, IContextMenuFactory, IHttpRequestResponse):
 
         for i in httpResponseHeader:
             if i.startswith('Host'):
-                httpResponseHeaderFiltered += "\n"
+                httpResponseHeaderFiltered += "\r\n"
                 httpResponseHeaderFiltered += i
             elif i.startswith('Connection'):
-                httpResponseHeaderFiltered += "\n"
+                httpResponseHeaderFiltered += "\r\n"
                 httpResponseHeaderFiltered += i
             elif i.startswith('Content-Type'):
-                httpResponseHeaderFiltered += "\n"
+                httpResponseHeaderFiltered += "\r\n"
                 httpResponseHeaderFiltered += i
             elif i.startswith('Cookie'):
-                httpResponseHeaderFiltered += "\n"
+                httpResponseHeaderFiltered += "\r\n"
                 httpResponseHeaderFiltered += i
 
         if not httpResponseBody:
             httpResponse = httpResponseHeaderFiltered
         else:
-            httpResponse = httpResponseHeaderFiltered + "\n\n" + httpResponseBody
+            httpResponse = httpResponseHeaderFiltered + "\r\n  \r\n" + httpResponseBody
 
         httpResponse = unquote(httpResponse).decode('utf8')
 
-        data = "Als Proof of Concept kann dazu nachfolgender Request genutzt werden:\n\n```\n" + httpRequest + "\n```" + "\n\nDie Applikation beantwortet dies daraufhin mit folgender Response:\n\n" + "```\n" + httpResponse + "\n```"
+        data = "Als Proof of Concept kann dazu nachfolgender Request genutzt werden:\r\n  \r\n```\r\n" + httpRequest + "\r\n```" + "\r\n  \r\nDie Applikation beantwortet dies daraufhin mit folgender Response:\r\n  \r\n" + "```\r\n" + httpResponse + "\r\n```"
         self.copyToClipboard(data)
 
     def copyToClipboard(self, data):
